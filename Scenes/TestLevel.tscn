@@ -1,12 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://08ygkdv5ql3c"]
+[gd_scene load_steps=5 format=3 uid="uid://08ygkdv5ql3c"]
 
 [ext_resource type="Texture2D" uid="uid://bn6sqbb341j3l" path="res://icon.svg" id="1_5ms4e"]
-[ext_resource type="PackedScene" uid="uid://cxy678ipxxco2" path="res://Scenes/Player.tscn" id="1_bhm8u"]
+[ext_resource type="PackedScene" uid="uid://cc2nh0xlwx58m" path="res://Scenes/Player.tscn" id="1_bhm8u"]
+[ext_resource type="PackedScene" uid="uid://bg670v4a34gu8" path="res://Scenes/enemy_base.tscn" id="4_oy2kj"]
+
+[sub_resource type="GDScript" id="GDScript_shgkq"]
 
 [node name="Node2D" type="Node2D"]
+script = SubResource("GDScript_shgkq")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(1.875, 1.125)
 texture = ExtResource("1_5ms4e")
 
-[node name="Node2D" parent="." instance=ExtResource("1_bhm8u")]
+[node name="EnemyBase" parent="." instance=ExtResource("4_oy2kj")]
+position = Vector2(72, 24)
+
+[node name="Player" parent="." instance=ExtResource("1_bhm8u")]

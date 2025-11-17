@@ -18,11 +18,10 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 motion_mode = 1
 platform_on_leave = 2
 script = ExtResource("1_kyqiw")
-Aceleration = 0.1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(4.7683716e-07, 4.7683716e-07)
