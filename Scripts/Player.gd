@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 #customizeble values to speed up testing
-@export var Aceleration:float = 1
+@export var Acceleration:float = 0.1
 
 #references
 @onready var Health = $Health
@@ -12,8 +12,8 @@ func _process(delta: float) -> void:
 	velocity *= 0.9
 	
 	#adds to velocity based on player movement
-	velocity.y += Aceleration * Input.get_axis("Move_Up","Move_Down")
-	velocity.x += Aceleration * Input.get_axis("Move_Left","Move_Right")
+	velocity += Vector2(Input.get_axis("Move_Left","Move_Right"),
+	Input.get_axis("Move_Up","Move_Down")).normalized() * Acceleration
 	
 	#applies the velocity to the positions
 	position += velocity
