@@ -1,10 +1,14 @@
 extends Node2D
-
+class_name C_Health
 signal _DEATH()
 
 @export_category("Health")
 @export var MAXHEALTH:float = 100
 @export var HEALTH:float = 100
+@export var IMUNITY_FRAMES:int = 0
+
+var FRAME:int = 0
+var CAN_DAMAGE:bool = true
 
 @export_category("BAR")
 @export var HAS_BAR:bool = true
@@ -13,7 +17,17 @@ signal _DEATH()
 
 #Updates the bar on load
 func _ready() -> void:
+	FRAME = IMUNITY_FRAMES
 	_UPDATE_BAR()
+
+
+func _physics_process(delta: float) -> void:
+	#sets can damage to true after a certain amount of frames
+	if FRAME > IMUNITY_FRAMES:
+		CAN_DAMAGE = true
+	else:
+		CAN_DAMAGE = false
+		FRAME += 1
 
 #updates the values on the health bar
 func _UPDATE_BAR():
@@ -24,10 +38,14 @@ func _UPDATE_BAR():
 
 #applies damage to health and updates the bar
 func _DAMAGE(DAMAGE:float = 0):
+	if !CAN_DAMAGE:
+		return
+	FRAME = 0
 	HEALTH -= DAMAGE
 	if HEALTH <= 0:
 		HEALTH = 0
 		emit_signal("_DEATH")
+	CAN_DAMAGE = false
 	_UPDATE_BAR()
 
 #adds heal to HEALTH without going over MAXHEALTH and then updates bar

@@ -1,10 +1,10 @@
 extends CharacterBody2D
-
+class_name C_Player
 #customizeble values to speed up testing
 @export var Acceleration:float = 0.1
 
 #references
-@onready var Health = $Health
+@onready var Health:C_Health = $Health
 
 
 func _process(delta: float) -> void:
@@ -17,7 +17,7 @@ func _process(delta: float) -> void:
 	
 	#applies the velocity to the positions
 	position += velocity
-
+	
 	#input for testing
 	if Input.is_action_just_pressed("TEST_ACTION"):
 		pass

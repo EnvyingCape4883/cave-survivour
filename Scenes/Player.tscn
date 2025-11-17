@@ -41,6 +41,7 @@ scale = Vector2(0.12499999, 0.12499999)
 sprite_frames = SubResource("SpriteFrames_fkybt")
 
 [node name="Health" parent="." instance=ExtResource("3_gntrk")]
-HEALTH = 25.0
+HEALTH = 50.0
+IMUNITY_FRAMES = 5
 
 [connection signal="_DEATH" from="Health" to="." method="_death"]
