@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://cc2nh0xlwx58m"]
+
+[ext_resource type="Script" uid="uid://bg32ekv8n3ja4" path="res://Scripts/Player.gd" id="1_kyqiw"]
+[ext_resource type="Texture2D" uid="uid://bn6sqbb341j3l" path="res://icon.svg" id="2_6t5aa"]
+[ext_resource type="PackedScene" uid="uid://bjeruawcd74u3" path="res://Scenes/health.tscn" id="3_gntrk"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vgqql"]
+radius = 8.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fkybt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_6t5aa")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Player" type="CharacterBody2D"]
+motion_mode = 1
+platform_on_leave = 2
+script = ExtResource("1_kyqiw")
+Aceleration = 0.1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(4.7683716e-07, 4.7683716e-07)
+scale = Vector2(0.12499999, 0.12499999)
+texture = ExtResource("2_6t5aa")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(4.7683716e-07, 4.7683716e-07)
+scale = Vector2(0.12499999, 0.12499999)
+zoom = Vector2(5, 5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_vgqql")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.12499999, 0.12499999)
+sprite_frames = SubResource("SpriteFrames_fkybt")
+
+[node name="Health" parent="." instance=ExtResource("3_gntrk")]
+HEALTH = 25.0
+
+[connection signal="_DEATH" from="Health" to="." method="_death"]
