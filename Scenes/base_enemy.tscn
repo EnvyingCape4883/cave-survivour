@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://13kl7sibwyu"]
+
+[ext_resource type="Script" uid="uid://x07g4xk7n586" path="res://Scripts/enemy_base.gd" id="1_t2m80"]
+[ext_resource type="Texture2D" uid="uid://bn6sqbb341j3l" path="res://icon.svg" id="2_7p0xe"]
+[ext_resource type="PackedScene" uid="uid://bjeruawcd74u3" path="res://Scenes/health.tscn" id="3_trv5a"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jfnjk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_7p0xe")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d1l02"]
+radius = 8.0
+
+[node name="Base_Enemy" type="Node2D"]
+script = ExtResource("1_t2m80")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.12500001, 0.125)
+sprite_frames = SubResource("SpriteFrames_jfnjk")
+
+[node name="Health" parent="." groups=["Enemies"] instance=ExtResource("3_trv5a")]
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_d1l02")

@@ -1,13 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://08ygkdv5ql3c"]
+[gd_scene load_steps=6 format=3 uid="uid://08ygkdv5ql3c"]
 
 [ext_resource type="Texture2D" uid="uid://bn6sqbb341j3l" path="res://icon.svg" id="1_5ms4e"]
 [ext_resource type="PackedScene" uid="uid://cc2nh0xlwx58m" path="res://Scenes/Player.tscn" id="1_bhm8u"]
+[ext_resource type="Script" uid="uid://2yjgjqbenckp" path="res://Scripts/test_level.gd" id="1_oy2kj"]
 [ext_resource type="PackedScene" uid="uid://bg670v4a34gu8" path="res://Scenes/enemy_base.tscn" id="4_oy2kj"]
-
-[sub_resource type="GDScript" id="GDScript_shgkq"]
+[ext_resource type="PackedScene" uid="uid://dvocuxn1ar0p1" path="res://Scenes/enemy_spawner.tscn" id="4_ujyaq"]
 
 [node name="Node2D" type="Node2D"]
-script = SubResource("GDScript_shgkq")
+script = ExtResource("1_oy2kj")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(1.875, 1.125)
@@ -17,3 +17,5 @@ texture = ExtResource("1_5ms4e")
 position = Vector2(72, 24)
 
 [node name="Player" parent="." instance=ExtResource("1_bhm8u")]
+
+[node name="EnemySpawner" parent="." instance=ExtResource("4_ujyaq")]

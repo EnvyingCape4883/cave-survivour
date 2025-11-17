@@ -1,8 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://bg670v4a34gu8"]
+[gd_scene load_steps=10 format=3 uid="uid://bg670v4a34gu8"]
 
-[ext_resource type="Script" uid="uid://x07g4xk7n586" path="res://Scenes/enemy_base.gd" id="1_jd0l4"]
+[ext_resource type="Script" uid="uid://x07g4xk7n586" path="res://Scripts/enemy_base.gd" id="1_jd0l4"]
 [ext_resource type="Texture2D" uid="uid://bn6sqbb341j3l" path="res://icon.svg" id="1_r040p"]
+[ext_resource type="Script" uid="uid://diuixhwudqn2v" path="res://Enemy_Resorce.gd" id="2_x6wkx"]
 [ext_resource type="PackedScene" uid="uid://bjeruawcd74u3" path="res://Scenes/health.tscn" id="3_jd0l4"]
+
+[sub_resource type="Resource" id="Resource_bddga"]
+script = ExtResource("2_x6wkx")
+metadata/_custom_type_script = "uid://diuixhwudqn2v"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5qjw1"]
 radius = 8.0
@@ -13,17 +18,23 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("1_r040p")
 }],
-"loop": true,
-"name": &"default",
+"loop": false,
+"name": &"Defualt",
 "speed": 5.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jd0l4"]
 radius = 8.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_x6wkx"]
+radius = 4.0
+
 [node name="EnemyBase" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 2
 motion_mode = 1
 script = ExtResource("1_jd0l4")
+Enemy_Type = SubResource("Resource_bddga")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_5qjw1")
@@ -31,14 +42,24 @@ shape = SubResource("CircleShape2D_5qjw1")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.12500001, 0.125)
 sprite_frames = SubResource("SpriteFrames_cs1oe")
+animation = &"Defualt"
 
 [node name="Health" parent="." groups=["Enemies"] instance=ExtResource("3_jd0l4")]
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="AttackZone" type="Area2D" parent="."]
+collision_layer = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackZone"]
 shape = SubResource("CircleShape2D_jd0l4")
 
+[node name="StopZone" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StopZone"]
+shape = SubResource("CircleShape2D_x6wkx")
+
 [connection signal="_DEATH" from="Health" to="." method="_death"]
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
-[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="body_entered" from="AttackZone" to="." method="_On_Entered_Attack_Zone"]
+[connection signal="body_exited" from="AttackZone" to="." method="_on_Exited_Attack_Zone"]
+[connection signal="body_entered" from="StopZone" to="." method="_On_Entered_Stop_Zone"]
+[connection signal="body_exited" from="StopZone" to="." method="_On_Exited_Stop_Zone"]

@@ -5,10 +5,12 @@ signal _DEATH()
 @export_category("Health")
 @export var MAXHEALTH:float = 100
 @export var HEALTH:float = 100
+@export var DEFENCE:float = 0
 @export var IMUNITY_FRAMES:int = 0
 
 var FRAME:int = 0
 var CAN_DAMAGE:bool = true
+var DAMAGE_NUMBER_VELOCITY:Vector2 = Vector2(0,0)
 
 @export_category("BAR")
 @export var HAS_BAR:bool = true
@@ -41,7 +43,7 @@ func _DAMAGE(DAMAGE:float = 0):
 	if !CAN_DAMAGE:
 		return
 	FRAME = 0
-	HEALTH -= DAMAGE
+	HEALTH -= DAMAGE - DEFENCE
 	if HEALTH <= 0:
 		HEALTH = 0
 		emit_signal("_DEATH")
