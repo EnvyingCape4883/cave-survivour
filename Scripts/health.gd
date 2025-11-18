@@ -3,7 +3,7 @@ class_name C_Health
 signal _DEATH()
 
 @export_category("Health")
-@export var MAXHEALTH:float = 100
+@export var MAX_HEALTH:float = 100
 @export var HEALTH:float = 100
 @export var DEFENCE:float = 0
 @export var IMUNITY_FRAMES:int = 0
@@ -30,7 +30,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		CAN_DAMAGE = false
 		FRAME += 1
-
+	rotation = -get_parent().rotation
 #updates the values on the health bar
 func _UPDATE_BAR():
 	$HealthBar.visible = HAS_BAR
@@ -53,6 +53,6 @@ func _DAMAGE(DAMAGE:float = 0):
 #adds heal to HEALTH without going over MAXHEALTH and then updates bar
 func _HEAL(HEAL:float = 0):
 	HEALTH += HEAL
-	if HEALTH > MAXHEALTH:
-		HEALTH = MAXHEALTH
+	if HEALTH > MAX_HEALTH:
+		HEALTH = MAX_HEALTH
 	_UPDATE_BAR()

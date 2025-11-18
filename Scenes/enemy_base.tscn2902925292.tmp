@@ -1,8 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://bg670v4a34gu8"]
+[gd_scene load_steps=10 format=3 uid="uid://bg670v4a34gu8"]
 
 [ext_resource type="Script" uid="uid://x07g4xk7n586" path="res://Scripts/enemy_base.gd" id="1_jd0l4"]
 [ext_resource type="Texture2D" uid="uid://bn6sqbb341j3l" path="res://icon.svg" id="1_r040p"]
+[ext_resource type="Script" uid="uid://diuixhwudqn2v" path="res://Scripts/Resorces/Enemy_RE.gd" id="2_x6wkx"]
 [ext_resource type="PackedScene" uid="uid://bjeruawcd74u3" path="res://Scenes/health.tscn" id="3_jd0l4"]
+
+[sub_resource type="Resource" id="Resource_bddga"]
+script = ExtResource("2_x6wkx")
+metadata/_custom_type_script = "uid://diuixhwudqn2v"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5qjw1"]
 radius = 8.0
@@ -18,20 +23,17 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_bddga"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_jd0l4"]
 radius = 8.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_x6wkx"]
-size = Vector2(12, 12)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_x6wkx"]
 radius = 4.0
 
 [node name="EnemyBase" type="CharacterBody2D"]
-collision_layer = 4
-collision_mask = 5
+collision_layer = 0
 motion_mode = 1
 script = ExtResource("1_jd0l4")
+Enemy_Type = SubResource("Resource_bddga")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_5qjw1")
@@ -43,27 +45,12 @@ animation = &"Defualt"
 
 [node name="Health" parent="." groups=["Enemies"] instance=ExtResource("3_jd0l4")]
 
-[node name="ContactZone" type="Area2D" parent="."]
+[node name="AttackZone" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactZone"]
-shape = SubResource("CircleShape2D_bddga")
-
-[node name="MeleeZone" type="Area2D" parent="."]
-modulate = Color(1, 0, 0, 1)
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MeleeZone"]
-modulate = Color(1, 0, 0, 1)
-position = Vector2(14, 0)
-shape = SubResource("RectangleShape2D_x6wkx")
-debug_color = Color(0.99435204, 0, 0.2307297, 0.41960785)
-
-[node name="Melee" type="Timer" parent="."]
-process_callback = 0
-one_shot = true
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackZone"]
+shape = SubResource("CircleShape2D_jd0l4")
 
 [node name="StopZone" type="Area2D" parent="."]
 collision_layer = 0
@@ -72,5 +59,11 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StopZone"]
 shape = SubResource("CircleShape2D_x6wkx")
 
+[node name="Attack" type="Timer" parent="."]
+
 [connection signal="_DEATH" from="Health" to="." method="_death"]
-[connection signal="timeout" from="Melee" to="." method="_on_melee_timeout"]
+[connection signal="body_entered" from="AttackZone" to="." method="_On_Entered_Attack_Zone"]
+[connection signal="body_exited" from="AttackZone" to="." method="_on_Exited_Attack_Zone"]
+[connection signal="body_entered" from="StopZone" to="." method="_On_Entered_Stop_Zone"]
+[connection signal="body_exited" from="StopZone" to="." method="_On_Exited_Stop_Zone"]
+[connection signal="timeout" from="Attack" to="." method="_on_attack_timeout"]
