@@ -8,7 +8,6 @@ class_name C_Enemy_Type_RE
 
 @export_group("Collisions")
 @export var Collision_Radius:float = 8
-@export var Stop_Radius:float = 0
 
 @export_group("DamageType")
 
@@ -24,7 +23,8 @@ class_name C_Enemy_Type_RE
 @export var Melee_Damage:float = 10
 
 @export_subgroup("Projectile")
-@export var Projectile:Projectile_RE
+@export var Projectile:C_Projectile_Type_RE
+@export var Stop_Radius:float = 0
 
 @export_group("")
 @export var Animations:SpriteFrames

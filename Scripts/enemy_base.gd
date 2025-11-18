@@ -7,23 +7,35 @@ var Enemy_Type:C_Enemy_Type_RE = C_Enemy_Type_RE.new()
 #attackig var stops movement if true is anabled once the attack starts
 var Attacking:bool = false
 
+#preloads the projectile spawner
+var Projectile_Spawner_pre = preload("res://Scenes/projectile_spawner.tscn")
+
 #reference to the player
 @onready var Player:C_Player = get_tree().get_first_node_in_group("Player")
-
 #referance to the health scene
 @onready var Health:C_Health = $Health
 #referance to the collision shape 2D node attatched to the enemy base node
 @onready var Collision_Shape:CollisionShape2D = $CollisionShape2D
-#referance to the melee xone node
+#referance to the melee zone node
 @onready var Melee_Zone:Area2D = $MeleeZone
-#referance to the contact xone node
+#referance to the contact zone node
 @onready var Contact_Zone:Area2D = $ContactZone
 #referance to the melee timer node
 @onready var Melee_Timer:Timer = $Melee
 #referance to the animadted sprite 2D node
 @onready var Anim_Sprite:AnimatedSprite2D = $AnimatedSprite2D
+#referance to the projectile spawner scene
+#referance to the stop zone node
+@onready var Stop_Zone:Area2D = $StopZone
 
 func _ready() -> void:
+	
+	if Enemy_Type.Projectile != null:
+		var Projectile_Spawner = Projectile_Spawner_pre.instantiate()
+		Projectile_Spawner.Projectile_Type = Enemy_Type.Projectile
+		Projectile_Spawner.Target = "Player"
+		add_child(Projectile_Spawner)
+	
 	#sets values for the health scene to the values from the Enemy Type resource
 	Health.MAX_HEALTH = Enemy_Type.Max_Health
 	Health.DEFENCE = Enemy_Type.Defence
@@ -37,14 +49,21 @@ func _ready() -> void:
 	#Sets the collision and contact radius to the values from the Enemy Type resource
 	Collision_Shape.shape.radius = Enemy_Type.Collision_Radius
 	Contact_Zone.get_child(0).shape.radius = Enemy_Type.Collision_Radius
+	
+	
+	Stop_Zone.get_child(0).shape.radius = Enemy_Type.Stop_Radius
 
 func _process(delta: float) -> void:
 	#reduces the velocity to slow movement overtime
 	velocity *= 0.9
 	
 	#adds velocity in the direction to the player unless the enemy is attacking with a melee attack
+	#or the player is in the stoping radius
 	if !Attacking:
-		velocity += position.direction_to(Player.position).normalized() * Enemy_Type.Speed
+		if Stop_Zone.get_child(0).shape.radius <= 0:
+			velocity += position.direction_to(Player.position).normalized() * Enemy_Type.Speed
+		elif Stop_Zone.get_overlapping_bodies().size() < 1:
+			velocity += position.direction_to(Player.position).normalized() * Enemy_Type.Speed
 		rotation = position.direction_to(Player.position).normalized().angle()
 	
 	#applies damage to the player if the player is touching the enemy and only inf contact damage is enabled

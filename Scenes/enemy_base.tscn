@@ -27,7 +27,7 @@ size = Vector2(12, 12)
 [sub_resource type="CircleShape2D" id="CircleShape2D_x6wkx"]
 radius = 4.0
 
-[node name="EnemyBase" type="CharacterBody2D"]
+[node name="EnemyBase" type="CharacterBody2D" groups=["Enemy"]]
 collision_layer = 4
 collision_mask = 5
 motion_mode = 1
@@ -41,7 +41,7 @@ scale = Vector2(0.12500001, 0.125)
 sprite_frames = SubResource("SpriteFrames_cs1oe")
 animation = &"Defualt"
 
-[node name="Health" parent="." groups=["Enemies"] instance=ExtResource("3_jd0l4")]
+[node name="Health" parent="." instance=ExtResource("3_jd0l4")]
 
 [node name="ContactZone" type="Area2D" parent="."]
 collision_layer = 0

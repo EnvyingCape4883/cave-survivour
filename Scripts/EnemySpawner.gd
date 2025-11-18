@@ -1,7 +1,7 @@
 extends Node2D
 class_name C_Enemy_Spawner
 
-@export var Enemy_Amount:int = 100
+var Enemy_Amount:int = 0
 var Enemy_Type:C_Enemy_Type_RE = C_Enemy_Type_RE.new()
 var Completed:bool = false
 

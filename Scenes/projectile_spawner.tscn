@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bwx2o4xln8t1q"]
+
+[ext_resource type="Script" uid="uid://cv7qqo1wsvj6u" path="res://Scripts/projectile_spawner.gd" id="1_fn4pw"]
+
+[node name="ProjectileSpawner" type="Node2D"]
+script = ExtResource("1_fn4pw")
+
+[node name="Spawn_Rate" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Spawn_Rate" to="." method="_on_spawn_rate_timeout"]

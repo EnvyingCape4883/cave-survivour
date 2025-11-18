@@ -3,12 +3,13 @@
 [ext_resource type="Texture2D" uid="uid://bn6sqbb341j3l" path="res://icon.svg" id="1_5ms4e"]
 [ext_resource type="PackedScene" uid="uid://cc2nh0xlwx58m" path="res://Scenes/Player.tscn" id="1_bhm8u"]
 [ext_resource type="Script" uid="uid://2yjgjqbenckp" path="res://Scripts/test_level.gd" id="1_oy2kj"]
-[ext_resource type="Resource" uid="uid://b03mx6r3e5jn3" path="res://Scripts/Resorces/ProjectileTest.tres" id="2_oy2kj"]
+[ext_resource type="Resource" uid="uid://jo51fk6gg7p1" path="res://Scripts/Resorces/MeleeTest.tres" id="2_oy2kj"]
 [ext_resource type="PackedScene" uid="uid://dvocuxn1ar0p1" path="res://Scenes/enemy_spawner.tscn" id="4_ujyaq"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_oy2kj")
 Test_Enemy = ExtResource("2_oy2kj")
+Amount = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(1.875, 1.125)
